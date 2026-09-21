@@ -28,12 +28,21 @@ jobs:
           echo "enc_count=$count" >> "$GITHUB_OUTPUT"
           echo "Found $count encrypted photos."
 
+      - name: Configure swap space (8 GB)
+        if: steps.check.outputs.enc_count != '0'
+        run: |
+          sudo fallocate -l 8G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=8192
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          free -h
+
       - name: Cache Ollama models
         if: steps.check.outputs.enc_count != '0'
         uses: actions/cache@v4
         with:
           path: ~/.ollama
-          key: ollama-llava-phi3-v2
+          key: ollama-llava-7b-v1
 
       - name: Install and start Ollama
         if: steps.check.outputs.enc_count != '0'
@@ -45,9 +54,9 @@ jobs:
             curl -sf http://localhost:11434/api/tags >/dev/null 2>&1 && echo "Ollama ready" && break || sleep 2
           done
 
-      - name: Pull llava-phi3 model
+      - name: Pull llava:7b model
         if: steps.check.outputs.enc_count != '0'
-        run: ollama pull llava-phi3
+        run: ollama pull llava:7b
 
       - name: Set up Python 3.11
         if: steps.check.outputs.enc_count != '0'
@@ -64,6 +73,7 @@ jobs:
         env:
           DECRYPT_KEY: ${{ secrets.PHOTO_DECRYPT_KEY }}
           OLLAMA_URL: http://localhost:11434
+          OLLAMA_MODEL: llava:7b
         run: python scripts/decrypt_and_label.py
 
       - name: Commit labels back to repo

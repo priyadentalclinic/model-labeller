@@ -33,9 +33,9 @@ INPUT_DIR    = BASE / "input_encrypted"
 OUTPUT_DIR   = BASE / "output_labels"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-OLLAMA_MODEL = "llava-phi3"
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llava:7b")
 MAX_RETRIES  = 3
-TIMEOUT_SEC  = 180  # 3 min per image
+TIMEOUT_SEC  = 300  # 5 min per image
 
 
 def decrypt_photo(enc_path: pathlib.Path, fernet: Fernet) -> bytes:
