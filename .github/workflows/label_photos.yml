@@ -1,0 +1,81 @@
+name: Label Photos with LLaVA AI
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'input_encrypted/**.enc'
+
+jobs:
+  label-photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Count encrypted photos
+        id: check
+        shell: bash
+        run: |
+          count=$(find input_encrypted -name "*.enc" 2>/dev/null | wc -l)
+          echo "enc_count=$count" >> "$GITHUB_OUTPUT"
+          echo "Found $count encrypted photos."
+
+      - name: Cache Ollama models
+        if: steps.check.outputs.enc_count != '0'
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama
+          key: ollama-llava-phi3-v2
+
+      - name: Install and start Ollama
+        if: steps.check.outputs.enc_count != '0'
+        shell: bash
+        run: |
+          curl -fsSL https://ollama.ai/install.sh | sh
+          ollama serve &>/tmp/ollama.log &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:11434/api/tags >/dev/null 2>&1 && echo "Ollama ready" && break || sleep 2
+          done
+
+      - name: Pull llava-phi3 model
+        if: steps.check.outputs.enc_count != '0'
+        run: ollama pull llava-phi3
+
+      - name: Set up Python 3.11
+        if: steps.check.outputs.enc_count != '0'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python deps
+        if: steps.check.outputs.enc_count != '0'
+        run: pip install --quiet cryptography pillow requests
+
+      - name: Decrypt and label photos
+        if: steps.check.outputs.enc_count != '0'
+        env:
+          DECRYPT_KEY: ${{ secrets.PHOTO_DECRYPT_KEY }}
+          OLLAMA_URL: http://localhost:11434
+        run: python scripts/decrypt_and_label.py
+
+      - name: Commit labels back to repo
+        if: steps.check.outputs.enc_count != '0'
+        shell: bash
+        run: |
+          git config user.name "LabelBot"
+          git config user.email "labelbot@users.noreply.github.com"
+          git add output_labels/
+          if git diff --staged --quiet; then
+            echo "Nothing new to commit."
+          else
+            git commit -m "Auto-labeled $(date +'%Y-%m-%d %H:%M')"
+            git push
+          fi

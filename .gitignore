@@ -1,0 +1,14 @@
+# Local only — never commit these
+local/config.key
+to_upload/
+sorted_photos/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS
+.DS_Store
+Thumbs.db
