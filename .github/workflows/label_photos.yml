@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'input_encrypted/**.enc'
+      - '.github/workflows/label_photos.yml'
 
 jobs:
   label-photos:
@@ -27,15 +28,6 @@ jobs:
           count=$(find input_encrypted -name "*.enc" 2>/dev/null | wc -l)
           echo "enc_count=$count" >> "$GITHUB_OUTPUT"
           echo "Found $count encrypted photos."
-
-      - name: Configure swap space (8 GB)
-        if: steps.check.outputs.enc_count != '0'
-        run: |
-          sudo fallocate -l 8G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=8192
-          sudo chmod 600 /swapfile
-          sudo mkswap /swapfile
-          sudo swapon /swapfile
-          free -h
 
       - name: Cache Ollama models
         if: steps.check.outputs.enc_count != '0'
