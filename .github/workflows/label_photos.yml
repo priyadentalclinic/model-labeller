@@ -79,5 +79,7 @@ jobs:
             echo "Nothing new to commit."
           else
             git commit -m "Auto-labeled $(date +'%Y-%m-%d %H:%M')"
-            git push
+            for i in {1..5}; do
+              git pull --rebase origin main && git push origin main && break || sleep 3
+            done
           fi
