@@ -33,7 +33,7 @@ INPUT_DIR    = BASE / "input_encrypted"
 OUTPUT_DIR   = BASE / "output_labels"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "minicpm-v")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5vl:7b")
 MAX_RETRIES  = 3
 TIMEOUT_SEC  = 300  # 5 min per image
 

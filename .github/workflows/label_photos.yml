@@ -34,7 +34,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.ollama
-          key: ollama-minicpm-v-v1
+          key: ollama-qwen2.5vl-7b-v1
 
       - name: Install and start Ollama
         if: steps.check.outputs.enc_count != '0'
@@ -46,9 +46,9 @@ jobs:
             curl -sf http://localhost:11434/api/tags >/dev/null 2>&1 && echo "Ollama ready" && break || sleep 2
           done
 
-      - name: Pull minicpm-v model
+      - name: Pull qwen2.5vl:7b model
         if: steps.check.outputs.enc_count != '0'
-        run: ollama pull minicpm-v
+        run: ollama pull qwen2.5vl:7b
 
       - name: Set up Python 3.11
         if: steps.check.outputs.enc_count != '0'
@@ -65,7 +65,7 @@ jobs:
         env:
           DECRYPT_KEY: ${{ secrets.PHOTO_DECRYPT_KEY }}
           OLLAMA_URL: http://localhost:11434
-          OLLAMA_MODEL: minicpm-v
+          OLLAMA_MODEL: qwen2.5vl:7b
         run: python scripts/decrypt_and_label.py
 
       - name: Commit labels back to repo
