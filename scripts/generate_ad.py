@@ -39,12 +39,20 @@ DEFAULT_NEGATIVE = (
 
 
 def crop_to_square(img: Image.Image) -> Image.Image:
-    """Center square crop to focus on face for IP-Adapter."""
+    """Smart crop to focus on face for IP-Adapter."""
     w, h = img.size
-    min_dim = min(w, h)
-    left = (w - min_dim) // 2
-    top = (h - min_dim) // 2
-    return img.crop((left, top, left + min_dim, top + min_dim)).resize((512, 512), Image.Resampling.LANCZOS)
+    if h > w:
+        # In portrait photos, face is in the top section
+        top = int(h * 0.03)
+        bottom = min(h, top + w)
+        crop_h = bottom - top
+        return img.crop((0, top, w, top + crop_h)).resize((512, 512), Image.Resampling.LANCZOS)
+    else:
+        # In landscape photos, center crop
+        min_dim = min(w, h)
+        left = (w - min_dim) // 2
+        top = (h - min_dim) // 2
+        return img.crop((left, top, left + min_dim, top + min_dim)).resize((512, 512), Image.Resampling.LANCZOS)
 
 
 def main():
@@ -92,7 +100,7 @@ def main():
         subfolder="models",
         weight_name="ip-adapter-plus-face_sd15.bin",
     )
-    pipe.set_ip_adapter_scale(0.75)
+    pipe.set_ip_adapter_scale(0.85)
     pipe.to("cpu")
     print("      Model loaded successfully on CPU!")
 
@@ -101,10 +109,6 @@ def main():
     for i, enc_path in enumerate(enc_files, 1):
         stem = enc_path.stem
         out_enc_path = OUTPUT_DIR / f"{stem}_ad.png.enc"
-
-        if out_enc_path.exists():
-            print(f"[{i}/{len(enc_files)}] [SKIP] Already generated: {out_enc_path.name}")
-            continue
 
         print(f"[{i}/{len(enc_files)}] Decrypting reference: {enc_path.name} in memory...")
         enc_bytes = enc_path.read_bytes()
