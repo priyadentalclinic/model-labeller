@@ -21,8 +21,12 @@ def main():
     r = subprocess.run("git pull --rebase origin main", shell=True, capture_output=True, text=True)
     print(f"  {r.stdout.strip() or r.stderr.strip()}")
 
-    # Find label files
-    label_files = sorted(OUTPUT_DIR.glob("*_labels.json"))
+    # Find label files (prefer Qwen 2.5-VL labels, fallback to any label json)
+    qwen_files = sorted(OUTPUT_DIR.glob("*_qwen2.5vl.json"))
+    if qwen_files:
+        label_files = qwen_files
+    else:
+        label_files = [f for f in sorted(OUTPUT_DIR.glob("*.json")) if f.name != ".gitkeep"]
     if not label_files:
         print()
         print("[INFO] No label files yet. GitHub Actions may still be running.")

@@ -1,4 +1,4 @@
-name: Label Photos (3-Model Matrix)
+name: Label Photos (Qwen 2.5-VL AI)
 
 on:
   workflow_dispatch:
@@ -11,10 +11,6 @@ jobs:
   label-photos:
     runs-on: ubuntu-latest
     timeout-minutes: 360
-    strategy:
-      fail-fast: false
-      matrix:
-        model: [llava:7b, minicpm-v, qwen2.5vl:7b]
     permissions:
       contents: write
 
@@ -38,7 +34,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.ollama
-          key: ollama-${{ matrix.model }}-v1
+          key: ollama-qwen2.5vl:7b-v1
 
       - name: Install and start Ollama
         if: steps.check.outputs.enc_count != '0'
@@ -50,9 +46,9 @@ jobs:
             curl -sf http://localhost:11434/api/tags >/dev/null 2>&1 && echo "Ollama ready" && break || sleep 2
           done
 
-      - name: Pull ${{ matrix.model }}
+      - name: Pull qwen2.5vl:7b
         if: steps.check.outputs.enc_count != '0'
-        run: ollama pull ${{ matrix.model }}
+        run: ollama pull qwen2.5vl:7b
 
       - name: Set up Python 3.11
         if: steps.check.outputs.enc_count != '0'
@@ -64,12 +60,12 @@ jobs:
         if: steps.check.outputs.enc_count != '0'
         run: pip install --quiet cryptography pillow requests
 
-      - name: Decrypt and label photos with ${{ matrix.model }}
+      - name: Decrypt and label photos with Qwen 2.5-VL
         if: steps.check.outputs.enc_count != '0'
         env:
           DECRYPT_KEY: ${{ secrets.PHOTO_DECRYPT_KEY }}
           OLLAMA_URL: http://localhost:11434
-          OLLAMA_MODEL: ${{ matrix.model }}
+          OLLAMA_MODEL: qwen2.5vl:7b
         run: python scripts/decrypt_and_label.py
 
       - name: Commit labels back to repo
@@ -82,7 +78,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "Nothing new to commit."
           else
-            git commit -m "Auto-labeled by ${{ matrix.model }} $(date +'%Y-%m-%d %H:%M')"
+            git commit -m "Auto-labeled by qwen2.5vl:7b $(date +'%Y-%m-%d %H:%M')"
             for i in {1..15}; do
               git pull --rebase -X theirs origin main && git push origin main && break || (git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 5 + 3)))
             done
