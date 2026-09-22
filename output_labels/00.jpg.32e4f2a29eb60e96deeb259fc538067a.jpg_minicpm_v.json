@@ -1,0 +1,99 @@
+{
+  "original_filename": "00.jpg.32e4f2a29eb60e96deeb259fc538067a.jpg",
+  "enc_filename": "00.jpg.32e4f2a29eb60e96deeb259fc538067a.jpg.enc",
+  "labeled_at": "2026-09-22T08:25:37.640696Z",
+  "model_used": "minicpm-v",
+  "labels": {
+    "compound_persona": "young_western_average (model)",
+    "compound_title": "young_western_average",
+    "archetype": "model",
+    "combo_tags": [
+      "average",
+      "calm",
+      "eastasian",
+      "explicit",
+      "long",
+      "medium_build",
+      "model",
+      "sitting",
+      "wheatish",
+      "young"
+    ],
+    "folder": "model/average",
+    "is_desi": false,
+    "age_years": 25,
+    "age_group": "young_adult",
+    "age_tag": "young",
+    "body_type": "average",
+    "skin_tone": "wheatish",
+    "boldness": "explicit",
+    "regional_type": "general_desi",
+    "mood": "neutral_calm",
+    "clothing_type": "bare_minimal",
+    "pose": "sitting",
+    "hair_length": "long",
+    "query_matches": [
+      {
+        "query": "desi + bhabhi",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      },
+      {
+        "query": "desi + young + slim",
+        "match_pct": 33,
+        "matched": [
+          "young"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "desi + mature + curvy",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      },
+      {
+        "query": "desi + college",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      },
+      {
+        "query": "south_indian + dusky",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      },
+      {
+        "query": "bold + desi",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      },
+      {
+        "query": "bikini + desi",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      },
+      {
+        "query": "punjabi_kudi + fair",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      }
+    ],
+    "llava_raw": {
+      "AGE_YEARS": "20s",
+      "AGE_GROUP": "young_adult",
+      "BODY_BUILD": "average",
+      "SKIN_COLOR": "medium_brown",
+      "HAIR_LENGTH": "long",
+      "CLOTHING": "bare_minimal",
+      "POSE": "sitting",
+      "MOOD": "neutral_calm",
+      "ETHNICITY": "east_asian"
+    }
+  }
+}
