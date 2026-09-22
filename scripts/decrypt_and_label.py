@@ -82,12 +82,13 @@ def process_one(enc_path: pathlib.Path, fernet: Fernet) -> bool:
     original_name = urllib.parse.unquote(enc_name)  # e.g. "photo name.jpg"
     ext = pathlib.Path(original_name).suffix.lower()
 
-    # Output JSON path
+    # Output JSON path (includes model tag so multiple models can label the same photo)
+    model_tag = OLLAMA_MODEL.split(":")[0].replace("-", "_")
     safe_stem = enc_path.stem.replace("%", "_")
-    out_json = OUTPUT_DIR / f"{safe_stem}_labels.json"
+    out_json  = OUTPUT_DIR / f"{safe_stem}_{model_tag}.json"
 
     if out_json.exists():
-        print(f"  [SKIP] Already labeled: {original_name}")
+        print(f"  [SKIP] Already labeled by {OLLAMA_MODEL}: {original_name}")
         return True
 
     print(f"  [DECRYPT] {original_name} ...")
