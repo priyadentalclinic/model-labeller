@@ -2,6 +2,8 @@
 local/config.key
 to_upload/
 sorted_photos/
+to_generate/
+generated_photos/
 
 # Python
 __pycache__/
