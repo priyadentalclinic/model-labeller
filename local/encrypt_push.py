@@ -62,21 +62,33 @@ def main():
 
     print(f"\nEncrypted {encrypted_count} photo(s). Pushing to GitHub...\n")
 
-    # Git add + commit + push
+    # Git add + commit + push with auto-rebase and retry
     os.chdir(BASE)
-    cmds = [
-        "git add input_encrypted/",
-        f'git commit -m "Add {encrypted_count} encrypted photos for labeling"',
-        "git push",
-    ]
-    for cmd in cmds:
-        print(f"  $ {cmd}")
-        r = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        if r.stdout: print("   ", r.stdout.strip())
-        if r.stderr and "error" in r.stderr.lower():
-            print(f"  [GIT ERROR] {r.stderr.strip()}")
-            input("Press Enter to exit...")
-            sys.exit(1)
+
+    # 1. Always pull latest labels/commits from GitHub first
+    subprocess.run("git pull --rebase origin main", shell=True, capture_output=True, text=True)
+
+    # 2. Add encrypted files
+    subprocess.run("git add input_encrypted/", shell=True, capture_output=True, text=True)
+
+    # 3. Commit
+    subprocess.run(f'git commit -m "Add {encrypted_count} encrypted photos for labeling"', shell=True, capture_output=True, text=True)
+
+    # 4. Push with auto-sync retry
+    pushed = False
+    for attempt in range(1, 4):
+        print(f"  $ git push")
+        r = subprocess.run("git push origin main", shell=True, capture_output=True, text=True)
+        if r.returncode == 0:
+            pushed = True
+            break
+        print("  [SYNC] Remote updated, syncing with git pull --rebase...")
+        subprocess.run("git pull --rebase origin main", shell=True, capture_output=True, text=True)
+
+    if not pushed:
+        print("  [GIT ERROR] Push failed. Check internet connection.")
+        input("Press Enter to exit...")
+        sys.exit(1)
 
     print()
     print("=" * 55)

@@ -18,7 +18,7 @@ def main():
     # Git pull
     print("\n[1/3] Pulling latest labels from GitHub...")
     os.chdir(BASE)
-    r = subprocess.run("git pull", shell=True, capture_output=True, text=True)
+    r = subprocess.run("git pull --rebase origin main", shell=True, capture_output=True, text=True)
     print(f"  {r.stdout.strip() or r.stderr.strip()}")
 
     # Find label files
