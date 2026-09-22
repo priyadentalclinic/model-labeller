@@ -34,7 +34,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.ollama
-          key: ollama-llava-7b-v1
+          key: ollama-minicpm-v-v1
 
       - name: Install and start Ollama
         if: steps.check.outputs.enc_count != '0'
@@ -46,9 +46,9 @@ jobs:
             curl -sf http://localhost:11434/api/tags >/dev/null 2>&1 && echo "Ollama ready" && break || sleep 2
           done
 
-      - name: Pull llava:7b model
+      - name: Pull minicpm-v model
         if: steps.check.outputs.enc_count != '0'
-        run: ollama pull llava:7b
+        run: ollama pull minicpm-v
 
       - name: Set up Python 3.11
         if: steps.check.outputs.enc_count != '0'
@@ -65,7 +65,7 @@ jobs:
         env:
           DECRYPT_KEY: ${{ secrets.PHOTO_DECRYPT_KEY }}
           OLLAMA_URL: http://localhost:11434
-          OLLAMA_MODEL: llava:7b
+          OLLAMA_MODEL: minicpm-v
         run: python scripts/decrypt_and_label.py
 
       - name: Commit labels back to repo
