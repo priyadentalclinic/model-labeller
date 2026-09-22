@@ -53,11 +53,29 @@ def main():
         print(f"            -> {enc_path.name} ({len(encrypted)//1024} KB)")
         encrypted_count += 1
 
-    # Check for optional custom prompt file
+    # Prompt handling
     custom_prompt = TO_GENERATE / "prompt.txt"
     if custom_prompt.exists():
-        shutil.copy(str(custom_prompt), str(GEN_INPUT / "prompt.txt"))
-        print("  [PROMPT] Custom prompt included.")
+        current_prompt = custom_prompt.read_text(encoding="utf-8").strip()
+    else:
+        current_prompt = (
+            "authentic UGC selfie of a beautiful 22-year-old Indian girl applying sunscreen cream on her cheek, "
+            "glowing hydrated clear skin, soft natural smile, holding sunscreen tube, natural warm morning sunlight, "
+            "casual top, front-camera smartphone review photo, high resolution, photorealistic, natural skin texture"
+        )
+        custom_prompt.write_text(current_prompt, encoding="utf-8")
+
+    print("-" * 55)
+    print("CURRENT PROMPT:")
+    print(f"  {current_prompt}")
+    print("-" * 55)
+    user_inp = input("Press ENTER to use this prompt, or type a new prompt: ").strip()
+    if user_inp:
+        current_prompt = user_inp
+        custom_prompt.write_text(current_prompt, encoding="utf-8")
+        print(f"\n  [PROMPT UPDATED]: {current_prompt}\n")
+
+    (GEN_INPUT / "prompt.txt").write_text(current_prompt, encoding="utf-8")
 
     if encrypted_count == 0:
         print("\n[INFO] All reference photos already encrypted. Nothing new to push.")
