@@ -1,0 +1,117 @@
+{
+  "original_filename": "cleannnned.jpg",
+  "enc_filename": "cleannnned.jpg.enc",
+  "labeled_at": "2026-09-22T09:35:34.348821Z",
+  "model_used": "qwen2.5vl:7b",
+  "labels": {
+    "compound_persona": "teen_desi_average (college_girl)",
+    "compound_title": "teen_desi_average",
+    "archetype": "college_girl",
+    "combo_tags": [
+      "average",
+      "bold",
+      "calm",
+      "college",
+      "college_girl",
+      "crop_top",
+      "desi",
+      "indian",
+      "medium_build",
+      "midriff",
+      "shoulder",
+      "sitting",
+      "teen",
+      "wheatish_fair"
+    ],
+    "folder": "college_girl/average",
+    "is_desi": true,
+    "age_years": 20,
+    "age_group": "teen",
+    "age_tag": "teen",
+    "body_type": "average",
+    "skin_tone": "wheatish_fair",
+    "boldness": "bold",
+    "regional_type": "general_desi",
+    "mood": "neutral_calm",
+    "clothing_type": "crop_top_midriff",
+    "pose": "sitting",
+    "hair_length": "shoulder",
+    "query_matches": [
+      {
+        "query": "desi + bhabhi",
+        "match_pct": 50,
+        "matched": [
+          "desi"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "desi + young + slim",
+        "match_pct": 33,
+        "matched": [
+          "desi"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "desi + mature + curvy",
+        "match_pct": 33,
+        "matched": [
+          "desi"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "desi + college",
+        "match_pct": 100,
+        "matched": [
+          "desi",
+          "college"
+        ],
+        "is_exact": true
+      },
+      {
+        "query": "south_indian + dusky",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      },
+      {
+        "query": "bold + desi",
+        "match_pct": 100,
+        "matched": [
+          "bold",
+          "desi"
+        ],
+        "is_exact": true
+      },
+      {
+        "query": "bikini + desi",
+        "match_pct": 50,
+        "matched": [
+          "desi"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "punjabi_kudi + fair",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      }
+    ],
+    "llava_raw": {
+      "AGE_YEARS": "20",
+      "AGE_GROUP": "teen",
+      "BODY_BUILD": "average",
+      "SKIN_COLOR": "light_brown",
+      "HAIR_LENGTH": "shoulder",
+      "CLOTHING": "crop_top_midriff",
+      "POSE": "sitting",
+      "MOOD": "neutral_calm",
+      "ETHNICITY": "south_asian_indian",
+      "SOUTH_ASIAN_REGION": "general_desi",
+      "BODY_DETAIL": "average_proportional"
+    }
+  }
+}
