@@ -26,7 +26,7 @@ FERNET       = Fernet(KEY_BYTES)
 OLLAMA_URL   = os.environ.get("OLLAMA_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5vl:7b")
 ALBUM_START  = float(os.environ.get("ALBUM_START", "200"))
-ALBUM_END    = float(os.environ.get("ALBUM_END",   "210"))
+ALBUM_END    = float(os.environ.get("ALBUM_END",   "300"))
 MAX_RETRIES  = 3
 TIMEOUT_SEC  = 180   # GPU is fast, 3 min is enough
 
