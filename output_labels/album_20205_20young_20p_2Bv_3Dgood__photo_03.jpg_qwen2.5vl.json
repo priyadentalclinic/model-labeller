@@ -1,0 +1,119 @@
+{
+  "original_filename": "album 205 young p+v=good__photo_03.jpg",
+  "enc_filename": "album%20205%20young%20p%2Bv%3Dgood__photo_03.jpg.enc",
+  "labeled_at": "2026-09-23T07:28:30.655666Z",
+  "model_used": "qwen2.5vl:7b",
+  "labels": {
+    "compound_persona": "young_desi_curvy (desi_glam)",
+    "compound_title": "young_desi_curvy",
+    "archetype": "desi_glam",
+    "combo_tags": [
+      "bold_vibe",
+      "confident",
+      "curvy",
+      "desi",
+      "desi_glam",
+      "explicit",
+      "full_figure",
+      "hourglass",
+      "indian",
+      "selfie",
+      "south_indian",
+      "very_long",
+      "wheatish",
+      "young"
+    ],
+    "folder": "desi_glam/curvy",
+    "is_desi": true,
+    "age_years": 26,
+    "age_group": "young_adult",
+    "age_tag": "young",
+    "body_type": "curvy",
+    "skin_tone": "wheatish",
+    "boldness": "explicit",
+    "regional_type": "south_indian",
+    "mood": "confident_bold",
+    "clothing_type": "bare_minimal",
+    "pose": "selfie",
+    "hair_length": "very_long",
+    "query_matches": [
+      {
+        "query": "desi + bhabhi",
+        "match_pct": 50,
+        "matched": [
+          "desi"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "desi + young + slim",
+        "match_pct": 67,
+        "matched": [
+          "desi",
+          "young"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "desi + mature + curvy",
+        "match_pct": 67,
+        "matched": [
+          "desi",
+          "curvy"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "desi + college",
+        "match_pct": 50,
+        "matched": [
+          "desi"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "south_indian + dusky",
+        "match_pct": 50,
+        "matched": [
+          "south_indian"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "bold + desi",
+        "match_pct": 50,
+        "matched": [
+          "desi"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "bikini + desi",
+        "match_pct": 50,
+        "matched": [
+          "desi"
+        ],
+        "is_exact": false
+      },
+      {
+        "query": "punjabi_kudi + fair",
+        "match_pct": 0,
+        "matched": [],
+        "is_exact": false
+      }
+    ],
+    "llava_raw": {
+      "AGE_YEARS": "26",
+      "AGE_GROUP": "young_adult",
+      "BODY_BUILD": "curvy_hourglass",
+      "SKIN_COLOR": "medium_brown",
+      "HAIR_LENGTH": "very_long",
+      "CLOTHING": "bare_minimal",
+      "POSE": "close_up_selfie",
+      "MOOD": "confident_bold",
+      "ETHNICITY": "south_asian_indian",
+      "SOUTH_ASIAN_REGION": "south_indian",
+      "BODY_DETAIL": "hourglass_defined"
+    }
+  }
+}
