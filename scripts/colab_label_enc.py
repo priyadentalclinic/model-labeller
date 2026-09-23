@@ -101,11 +101,11 @@ def process_one(enc_path: pathlib.Path) -> bool:
 
 
 def main():
-    print("=" * 60)
-    print(f"  Colab Encrypted Label Runner")
-    print(f"  Album Range: {ALBUM_START:.0f} – {ALBUM_END:.0f}")
-    print(f"  Model: {OLLAMA_MODEL}")
-    print("=" * 60)
+    print("=" * 60, flush=True)
+    print(f"  Colab Encrypted Label Runner", flush=True)
+    print(f"  Album Range: {ALBUM_START:.0f} – {ALBUM_END:.0f}", flush=True)
+    print(f"  Model: {OLLAMA_MODEL}", flush=True)
+    print("=" * 60, flush=True)
 
     enc_files = sorted([
         f for f in INPUT_DIR.glob("*.enc")
@@ -115,25 +115,27 @@ def main():
     ], key=lambda f: album_num(f.name))
 
     if not enc_files:
-        print("[WARN] No matching .enc files found.")
-        return
+        print("[WARN] No matching .enc files found in input_encrypted/", flush=True)
+        sys.exit(1)
 
-    print(f"\nFound {len(enc_files)} files to process.\n")
+    print(f"\nFound {len(enc_files)} files to process.\n", flush=True)
     ok, fail = 0, 0
     for i, f in enumerate(enc_files, 1):
-        print(f"[{i}/{len(enc_files)}]")
+        print(f"[{i}/{len(enc_files)}]", flush=True)
         try:
             if process_one(f): ok += 1
             else: fail += 1
         except Exception:
             traceback.print_exc()
             fail += 1
-        print()
+        print("", flush=True)
 
-    print("=" * 60)
-    print(f"  Done: {ok}  |  Failed: {fail}")
-    print(f"  Encrypted labels saved to: output_labels_enc/")
-    print("=" * 60)
+    print("=" * 60, flush=True)
+    print(f"  Done: {ok}  |  Failed: {fail}", flush=True)
+    print(f"  Encrypted labels saved to: output_labels_enc/", flush=True)
+    print("=" * 60, flush=True)
+    if ok == 0 and fail > 0:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
